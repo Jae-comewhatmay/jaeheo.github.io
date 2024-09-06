@@ -8,7 +8,7 @@ class: page-template
 subclass: 'post page'
 ---
 
-# Hi Welcome who are looking at this blog
+### Hi Welcome who are looking at this blog
 
 Howdy!-
 
