@@ -34,7 +34,7 @@ url: https://jayheo1106.github.io
 # 자신의 github page url을 입력
 # ( https://your_github_id.github.io 형식 )
 
-baseurl: ""
+baseurl: /jayheo1106.github.io
 
 # Website info
 title: Statistical Analysis
