@@ -1,16 +1,16 @@
-Biostatistics :
-  name: Biostatistics
+biostatistics :
+  name: biostatistics
   description: False
   cover: assets/built/images/background-frontend.jpg
-Bioinformatics :
-  name: Bioinformatics
+bioinformatics :
+  name: bioinformatics
   description: False
   cover: assets/built/images/background-frontend.jpg
-About :
-  name: About
+about :
+  name: about
   description: False
   cover: assets/built/images/background-frontend.jpg
-Projects :
-  name: project
+projects :
+  name: projects
   description: False
   cover: assets/built/images/background-frontend.jpg
