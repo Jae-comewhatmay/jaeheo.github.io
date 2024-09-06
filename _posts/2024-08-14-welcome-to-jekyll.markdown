@@ -1,29 +1,29 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Intro about this blog and me!!"
 date:   2024-08-14 12:03:38 -0500
-categories: jekyll update
+categories: Intro of ME
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
 
-Jekyll requires blog post files to be named according to the following format:
+# Hi Welcome who are looking at this blog
 
-`YEAR-MONTH-DAY-title.MARKUP`
+Howdy!-
 
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+I am Jay and I am second year master student in Texas A&M University.
 
-Jekyll also offers powerful support for code snippets:
+나는 학부생 Junior 때부터 본격적으로 통계 공부를 해왔다면 통계를 하고있는지 어언 만 3년이 되었겠다. 학교에 다니다보면 매학기 초에 커리어센터에서는 학생들에게 어떻게 레쥬메를 써야하고, 어떻게 recruiter와 소통해야하는지 가르키는 수업 홍보가 만연하고, 또 커리어페어가 열리고, 정장을 입은 아기새들이 사회가면을 써가며 사람들과 대화하는 모습을 보게 된다.
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+![enter image description here](https://mblogthumb-phinf.pstatic.net/MjAyMjEyMDRfMTE0/MDAxNjcwMTM0MzQxNDc2.hTTF4r_oPoht-e8F-v6ap8ZSheuB9V6kExtYVz9PI-og.eL_di1rsJfgKDDfjGkyEtSCN0EPub2O9rfof926omCUg.JPEG.goms1101/IMG_3390.JPG?type=w800)
 
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
 
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+그러나 여느 누구와 마찬가지로, 우리는 사회의 구성원으로써 이제 직업을 찾아야 할 때가 왔다. 회사의 한 구성원이 되어 좋은 실적과 좋은 사람들과 일하게 될 게 설렌다. 진짜다! 내가 미성년자일 때부터 커리어우먼으로 성장한 나를 얼마나 꿈꿔왔는지 모른다. 그러나 취업 준비에 본격적으로 돌입하면서 나를 보여줄 방식이 레쥬메 한 장과 그 순간의 대화뿐인 게 아쉬워서 블로그를 시작하게 되었다.
+
+학부생은 기본적인 통계학을 배우게 된다. 다른 전공들과는 다르게 통계학 학생들은 석사는 필수라고들 한다. 석사 과정에 와보니 더욱 깊고 더 많은 메소드들을 배우게 되더라. 그러나 제일 의욕이 꺾일 때가 언제였냐 하면, 하나의 예를 들어보면 도시계획 박사 전공을 하는 친한 언니가 자기 랩에서는 통계 전공을 하는 친구를 뽑고 싶어하지 않는다는 이야기를 들었을 때다. 왜냐하면 통계는 그저 도구이고, 그쪽 전공의 사람들은 자기 전공의 지식을 우리에게 가르치는 게 번거롭게 느껴진다는 것이다. 물론 지극히 그 언니의 개인적인 견해이고, 나도 더 많은 사람들을 만나면서 그렇지 않다는 것도 알기는 한다. 그러나 내가 통계 외에 특정 분야에는 깊은 지식이 없기에 때로는 나의 전공 선택을 후회하기도 했다. 그래서 나는 석사 과정의 가장 큰 목표는 통계 안에서도 나의 분야를 결정하는 것이었다.
+
+결론적으로 나는 현재 Biostatistics, Bioinformatics, Machine Learning 쪽으로 나의 길을 좁혔다. 지도교수를 찾으려는 나의 노력의 결과 끝에 Bioinformatics 하는 교수님과 연구를 진행하고 있다. 물론 쉽지는 않다. 나는 RNA 전사 과정에는 무지했었다. 그러나 모르는 걸 쪽팔려하면 안 된다는 말이 있듯이, 나는 끝까지 노력해서 생물학을 따로 공부했고, 또 그 안에 쓰이는 머신러닝 기법들을 열심히 연마했다. 이 공부의 결과물 또한 블로그에 보이고 싶다.
+
+또한, 이제껏 학습한 내용들을 정리하는 시간도 이참에 만들어 보고 싶다. Regression이 뭔지, 시계열이란 또 뭐고, 베이지안은 뭔지 나도 다시 한 번 되새기며 나의 지식을 뽐내고자 한다.
+
+나의 강점은 한 가지 시작하면 끝까지 노력하는 것 아닐까. 또한 새로운 분야에 당황하지 않고 포용력이 좋은 것 아닐까. 그렇기에 나는 오히려 통계학과 더 맞는 사람이 아닐까.
+
+여기까지 나의 Intro였다.

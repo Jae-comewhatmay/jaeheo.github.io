@@ -1,6 +1,6 @@
 ---
-title: About Me
-category: General
+title: Stardew Valley
+category: Game
 ---
 
 Hi I'm Jae 
