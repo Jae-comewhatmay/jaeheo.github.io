@@ -62,7 +62,7 @@ source_url: https://github.com/Jae-comewhatmay/Jae-comewhatmay.github.io
 navigation: True
 # Navigation bar link를 보여줄건지 여부
 
-subscribers: True
+subscribers: FALSE
 # subscriber 기능을 사용할건지의 여부
 # 저는 약간의 수정을 통해 subscriber 기능대신
 # lunr.js를 이용한 검색 기능으로 대체 사용했습니다.

@@ -1,5 +1,5 @@
-Statistical-Method :
-  name: Statistical-Method
+Biostatistics :
+  name: Biostatistics
   description: False
   cover: assets/built/images/background-frontend.jpg
 Bioinformatics :
@@ -10,7 +10,7 @@ About :
   name: About
   description: False
   cover: assets/built/images/background-frontend.jpg
-project :
+Projects :
   name: project
   description: False
   cover: assets/built/images/background-frontend.jpg
