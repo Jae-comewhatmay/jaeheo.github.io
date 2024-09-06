@@ -1,16 +1,16 @@
-speeches:
-  name: speeches
-  description: Some of the greatest words ever spoken.
-  cover: assets/images/speeches.jpg
-fiction:
-  name: fiction
+Statistical-Method :
+  name: Statistical-Method
   description: False
-  cover: False
-fables:
-  name: fables
-  description: A series of short stories that make you think.
-  cover: assets/images/fables.jpg
-getting-started:
-  name: getting-started
+  cover: assets/built/images/background-frontend.jpg
+Bioinformatics :
+  name: Bioinformatics
   description: False
-  cover: False
+  cover: assets/built/images/background-frontend.jpg
+About :
+  name: About
+  description: False
+  cover: assets/built/images/background-frontend.jpg
+project :
+  name: project
+  description: False
+  cover: assets/built/images/background-frontend.jpg
