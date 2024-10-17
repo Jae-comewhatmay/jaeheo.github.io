@@ -85,6 +85,55 @@ processedCorpus <- tm_map(processedCorpus, stripWhitespace)
    
 3. **Interpreting Results**: The results highlighted the most relevant topics and keywords, providing insights into the decisions made by LLMs.
 
+Here is the code sample :
+
+```r
+# compute document term matrix with terms >= minimumFrequency
+minimumFrequency <- 1
+DTM <- DocumentTermMatrix(processedCorpus, control = list(bounds = list(global = c(minimumFrequency, Inf))))
+sel_idx <- slam::row_sums(DTM) > 0
+DTM <- DTM[sel_idx, ]
+data.1 <- data.1[sel_idx, ]
+
+# create models with different number of topics
+# Find k (num of topics)
+result <- ldatuning::FindTopicsNumber(
+  DTM,
+  topics = seq(from = 2, to = 10, by = 1),
+  metrics = c("CaoJuan2009",  "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 77),
+  verbose = TRUE
+)
+FindTopicsNumber_plot(result)  # You should pick the numer of topics with this plot
+# number of topics
+K <- 3
+# set random number generator seed
+set.seed(99)
+# compute the LDA model, inference via 1000 iterations of Gibbs sampling
+topicModel <- LDA(DTM, K, method="Gibbs", control=list(iter = 500, verbose = 25))
+# have a look a some of the results (posterior distributions)
+tmResult <- posterior(topicModel)
+# format of the resulting object
+# attributes(tmResult)
+nTerms(DTM) 
+beta <- tmResult$terms   # get beta from results
+dim(beta) 
+rowSums(beta) 
+nDocs(DTM) 
+# for every document we have a probability distribution of its contained topics
+theta <- tmResult$topics 
+dim(theta)               # nDocs(DTM) distributions over K topics
+rowSums(theta)[1:6]   
+terms(topicModel,20)
+
+# top5 keywords
+top5termsPerTopic <- terms(topicModel, 20)
+topicNames <- apply(top5termsPerTopic, 2, paste, collapse=" ") # first 5 keywords
+top5termsPerTopic
+topicNames
+```
+
 ### Conclusion
 
 LDA topic modeling offers valuable insights into the structure of text data, helping uncover themes and patterns within LLM explanations. By carefully preprocessing the texts and selecting the right parameters, we derived meaningful topics that reflect how these models make decisions.
@@ -97,3 +146,19 @@ LDA topic modeling offers valuable insights into the structure of text data, hel
 - Cao Juan, Xia Tian, Li Jintao, Zhang Yongdong, and Tang Sheng. 2009. A density-based method for adaptive LDA model selection. *Neurocomputing* 72, 7–9: 1775–1781. [DOI](http://doi.org/10.1016/j.neucom.2008.06.011).
 - Romain Deveaud, Éric SanJuan, and Patrice Bellot. 2014. Accurate and effective latent concept modeling for ad hoc information retrieval. *Document numérique* 17, 1: 61–84. [DOI](http://doi.org/10.3166/dn.17.1.61-84).
 
+### Bonus WordCloud Code
+
+```r
+# visualize topics as word cloud
+topicToViz <- 1 # change for your own topic of interest
+# select to 40 most probable terms from the topic by sorting the term-topic-probability vector in decreasing order
+top20terms <- sort(tmResult$terms[topicToViz,], decreasing=TRUE)[1:20]
+words <- names(top20terms)
+# extract the probabilites of each of the 20 terms
+probabilities <- sort(tmResult$terms[topicToViz,], decreasing=TRUE)[1:20]
+# visualize the terms as wordcloud
+mycolors <- brewer.pal(8, "Dark2")
+
+
+wordcloud(words, probabilities, random.order = FALSE, color = mycolors)
+```
