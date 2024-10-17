@@ -5,12 +5,8 @@ date:   2024-10-17 00:00
 category: projects
 icon: www
 keywords: chatGPT, bot, topic_modeling, LDA
-image: 1.jpg
+# image: 1.jpg
 preview: 1
----
-
-Here’s a simplified and natural English translation:
-
 ---
 
 ## Project Collaboration with Ruth, a PhD Candidate in Communication at Misgihan State University
