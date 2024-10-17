@@ -3,8 +3,8 @@ layout: post
 title: LDA Topic Modeling
 date: 2024-10-17 01:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
-img: how-to-start.jpg # Add image post (optional)
-tags: [Programming, Learn] # add tag
+img: LDA.webp # Add image post (optional)
+tags: [Topic_Modeling, LDA] # add tag
 ---
 
 
