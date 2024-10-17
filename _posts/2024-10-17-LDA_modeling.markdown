@@ -1,7 +1,7 @@
 ---
 layout: post
 title: LDA Topic Modeling
-date: 2024-10-17 00:00:00 +0300
+date: 2024-10-17 01:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: how-to-start.jpg # Add image post (optional)
 tags: [Programming, Learn] # add tag
@@ -55,7 +55,7 @@ In natural language processing (NLP), understanding the underlying themes in a s
 
 ### Preprocessing Texts
 
-Before running LDA, it’s important to preprocess the data for consistency and accuracy. For our analysis, we used Python and R to handle preprocessing tasks:
+Before running LDA, it’s important to preprocess the data for consistency and accuracy. For our analysis, we used R to handle preprocessing tasks:
 
 - **Removing Noise**: We eliminated extra spaces and punctuation to reduce noise.
 - **Lowercasing**: We converted all text to lowercase for uniformity.
