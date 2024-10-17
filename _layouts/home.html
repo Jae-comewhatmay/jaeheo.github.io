@@ -1,57 +1,33 @@
 ---
 layout: default
 ---
-
-{%- if page.title -%}
-  <h1 class="page-heading">{{ page.title }}</h1>
-{%- endif -%}
-
-{{ content }}
-
-{%- if site.posts.size > 0 -%}
-  <ul class="posts">
-    <li class="posts-labelgroup" id="posts-labelgroup">
-      <h1 id="posts-label">posts</h1>
-      {% if site.plainwhite.search %}
-      <div class="search-container">
-        <div class="search-section">
-          <i class="icon-search"></i>
-          <input type="text" name="search" id="searchbar" autocomplete="off" aria-label="search in posts">
-        </div>
-        <div class="search-results" id="search-results" data-placeholder="No Results" style="display: none;"></div>
+<!-- Post -->
+{% for post in site.posts %} 
+  <article class="post">
+    <header>
+      <div class="title">
+      <span class="image left image-icon"><a href="{{ post.url | relative_url }}"><img src="{{ site.baseurl}}/images/{{ post.icon }}.svg" style="width: 4em;" alt="{{ post.icon }}"></a></span>
+        <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
       </div>
-      {% endif %}
-    </li>
-
-    {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.plainwhite.date_format | default: "%b %-d, %Y" -%}
-        <a class="post-link" href="{{ post.url | relative_url }}">
-          <h2 class="post-title">{{ post.title | escape }}</h2>
-        </a>
-        <div class="post-meta">
-          <div class="post-date">
-            <i class="icon-calendar"></i>
-            {{ post.date | date: date_format }}
-          </div>
-          {%- if post.categories.size > 0-%}
-          <ul class="post-categories">
-            {%- for tag in post.categories -%}
-            <li>{{ tag }}</li>
-            {%- endfor -%}
-          </ul>
-          {%- endif -%}
-        </div>
-        <div class="post">
-          {%- if site.show_excerpts -%}
-            {{ post.excerpt }}
-          {%- endif -%}
-        </div>
-      </li>
-    {%- endfor -%}
-  </ul>
-
-  <!-- <p class="feed-subscribe"><svg class="svg-icon orange">
-		<use xlink:href="{{ '/assets/minima-social-icons.svg#rss' | relative_url }}"></use>
-	</svg><a href="{{ "/feed.xml" | relative_url }}">Subscribe</a></p> -->
-{%- endif -%}
+      <div class="meta">
+        <time class="published" datetime="{{ post.date }}">{{ post.date | date: "%d %b %Y %R" }}</time>
+        <a href="{{ site.author.cv }}" class="author"><span class="name">V.{{ site.author.last_name }}</span><img src="{{ site.author.avatar | prepend: site.baseurl }}" alt="VKapitonenko" /></a>
+      </div>
+    </header>
+    {% if post.image %}
+      <a href="{{ post.url | relative_url }}" class="image featured"><img src="/post-img/{{ post.category }}/{{ post.image }}" alt="{{ post.title }}"></a>
+    {% endif %}
+    {% if post.preview != 0 %}
+      <p>{{ post.content | truncatewords: 35 }}</p>
+    {% endif %}
+    <footer> 
+      <ul class="actions">
+        <li><a href="{{ post.url | relative_url }}" class="button big">Читать Далее</a></li>
+      </ul>
+      <ul class="stats">
+        <li><a class="icon" href="{{ site.baseurl }}/{{ post.category }}"><i class="fas fa-fw fa-folder"></i> {{ post.category }}</a></li>
+        <li><a href="//github.com/ViKapitoshka/blog/edit/master/{{ page.path }}" class="icon"><i class="fas fa-fw fa-edit"></i> Edit</a></li>
+      </ul>
+    </footer>
+  </article>
+{% endfor %}
