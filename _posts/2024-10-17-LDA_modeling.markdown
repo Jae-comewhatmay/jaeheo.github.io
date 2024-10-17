@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Detecing Bots using ChatGPT - Project Overview
+title: LDA Topic Modeling
 date: 2024-10-17 00:00:00 +0300
 description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
 img: how-to-start.jpg # Add image post (optional)
@@ -62,6 +62,20 @@ Before running LDA, it’s important to preprocess the data for consistency and 
 - **Stemming and Lemmatization**: These techniques helped reduce words to their base forms, making the analysis more efficient.
 
 Be mindful that stemming and lemmatization can be time-consuming, especially with social media jargon or encoding issues. Collaboration with social scientists is helpful here to ensure accurate preprocessing.
+
+```r
+library(tm)
+# create corpus object
+corpus <- Corpus(DataframeSource(data.1))
+
+# Preprocessing chain
+processedCorpus <- tm_map(corpus, content_transformer(tolower))
+processedCorpus <- tm_map(processedCorpus, removeWords, english_stopwords)
+processedCorpus <- tm_map(processedCorpus, removePunctuation, preserve_intra_word_dashes = TRUE)
+processedCorpus <- tm_map(processedCorpus, removeNumbers)
+processedCorpus <- tm_map(processedCorpus, stemDocument, language = "en")
+processedCorpus <- tm_map(processedCorpus, stripWhitespace)
+```
 
 ### Method
 
