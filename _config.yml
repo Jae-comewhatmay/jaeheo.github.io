@@ -8,8 +8,8 @@ url: "https://jayheo1106.github.io" # the base hostname & protocol for your site
 author:
   name: 'Jay Heo'
   last_name: 'Heo'
-  cv: '//kaptn.ru'
-  avatar: '/images/avatar.jpeg'
+  cv: 'https://linkedin.com/in/jae-young-heo'
+  avatar: '/images/myphoto.jpeg'
   github_username:  jayheo1106 
   email: wodudgj1106@gmail.com
   logo: '/images/logo.svg'
