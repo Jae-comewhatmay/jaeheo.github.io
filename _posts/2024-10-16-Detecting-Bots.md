@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "Detecing Bots using ChatGPT - 프로젝트 총평"
+title:  "Detecing Bots using ChatGPT - Project Overview"
 date:   2024-10-17 00:00
 category: projects
 icon: www
-keywords: tag1, tag2
+keywords: chatGPT, bot, topic_modeling, LDA
 image: 1.jpg
 preview: 1
 ---
