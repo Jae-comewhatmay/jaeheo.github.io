@@ -7,29 +7,26 @@ img: rna.avif # Add image post (optional)
 tags: [rna, dna, sequencing, clustering] # add tag
 ---
 
-## 첫 Bioinformatics 도전
 
-나에게 있어서 Bioinformatics는 큰 도전이었다. 주로 clinical data, economic, spatial, (다른 데이터 너가 생각해봐)만 접하다가 biology, 특히 RNA seqence 데이터는 나에게 매우 새로운 주제였다. 그간 내가 공부하고 single cell RAN-seqencing이란 무엇이며, statisitcsal 하게 어떻게 적용되는지 한번 정리해보려 한다. 
+## My First Challenge in Bioinformatics
 
-1. 서론
-## What is Single cell RNA-seqeningc Analysis
+For me, bioinformatics was a big challenge. I had mainly worked with clinical data, economic data, spatial data, and other types of data I can think of. However, biology—especially RNA sequencing data—was a completely new topic for me. I want to summarize what I’ve learned about single-cell RNA sequencing and how it is applied in a statistical way.
 
-2000년대 개발된 차세대 RNA 시퀀싱 기술은 수천에서 수만 개의 유전자들을 동시에 측정하게 해 줌으로써 생물학의 시야를 급격히 넓혀주었다. 그 이후로 시퀀싱 기술은 발전에 발전을 거듭하여, 하나의 세포에서 수천 개의 유전자를 동시에 측정할 수 있는 단일 세포 시퀀싱의 시대에 이르렀다. 단일 세포 시퀀싱 기술도 날로 발전하고 있는데, 초기 수 개에서 수십 개의 세포를 다루던 수준에서 이제는 수백만 개의 세포를 동시에 처리하는 단계에 이르렀다. 이는 생명 현상을 관찰하는 우리의 시야를 비약적으로 늘려주었다. 생물학 전 분야에 걸쳐 기존의 연구 모델들을 단일 세포 수준에서 새롭게 접근하는 연구들이 진행되고 있는데, 기존에 알지 못했던 새로운 종류의 세포들이 속속들이 보고되고 있다. 
+## What is Single-Cell RNA Sequencing Analysis?
 
-현재까지 개발된 단일 세포 시퀀싱 기술의 실험 기법과 분석 기법을 대략적으로 정리해보자면
+The next-generation RNA sequencing technology developed in the 2000s has opened a new door in biology by allowing us to measure thousands to tens of thousands of genes at once. Since then, sequencing technology has continued to advance, leading us into the era of single-cell sequencing, where we can measure thousands of genes from a single cell simultaneously. Single-cell sequencing technology is evolving rapidly; we have moved from handling just a few dozen cells to now being able to process millions of cells at once. This progress has greatly expanded our ability to observe biological phenomena. Research across various fields of biology is now taking a new approach at the single-cell level, revealing many new types of cells that were previously unknown.
 
-현재 발표된 단일 세포 시퀀싱 기술의 종류는 수십 가지에 이르지만, 그 근본 원리는 기존의 RNA 시퀀싱 기술과 크게 다르지 않다. 대체로 oligo-dT 프라이머를 이용해 poly(A) 꼬리가 달린 mRNA들을 선별적으로 역전사하고, 이 과정에서 달린 adaptor 시퀀스를 이용해 역전사된 DNA를 증폭하여 cDNA library를 만드는 과정을 거치게 된다. 단일 세포 시퀀싱 기술의 관건은 이 과정을 아주 효율적으로 만들어서 하나의 세포에서 나온 RNA를 최대한 증폭하면서, 동시에 세포 별로 각기 다른 바코드 서열을 달아서 각 세포에서 나온 RNA들을 분류할 수 있도록 만드는 것이다. 이를 구현하는 방법에는 Plate based 시퀀싱, Droplet based 시퀀싱, Microwell based 시퀀싱, in situ Combinatorial indexing과 같은 방법들이 있다. 단일 세포 시퀀싱 실험에서 가장 중요한 것은 샘플을 건강한 단일 세포로 분리해 내는 준비 단계가 중요하다고 한다.
+To summarize the experimental and analytical techniques developed for single-cell sequencing so far, there are now dozens of types of single-cell sequencing technologies, but their fundamental principles are not very different from traditional RNA sequencing. Generally, we selectively reverse transcribe mRNA with poly(A) tails using oligo-dT primers. During this process, we amplify the reverse-transcribed DNA using adaptor sequences to create a cDNA library. The key to single-cell sequencing technology is to make this process highly efficient, maximizing the amplification of RNA from a single cell while tagging each cell's RNA with unique barcode sequences to categorize them. Various methods have been developed to achieve this, including plate-based sequencing, droplet-based sequencing, microwell-based sequencing, and in situ combinatorial indexing. In single-cell sequencing experiments, it’s crucial to properly isolate healthy single cells during the preparation phase.
 
+The basic unit of single-cell sequencing analysis is a single cell. However, due to sensitivity limitations, we cannot capture all RNA molecules from a cell, so we often miss significant information when looking at a single cell. Therefore, the key to single-cell sequencing analysis is to classify information from multiple cells, grouping similar cells together, and then analyzing these clusters as one unit. One might wonder if this is much different from bulk RNA sequencing. The important difference is that bulk RNA sequencing analyzes the average of all cells in a sample, while single-cell sequencing allows us to look at each individual cell and identify the different cell types present. Then, we can calculate the average for each cell type separately. This way, we can understand the diversity of cell populations while obtaining information with sensitivity comparable to traditional RNA sequencing.
 
-단일 세포 시퀀싱 분석의 기본 단위는 하나의 세포이지만, 민감도의 한계로 세포의 모든 RNA 분자에 대한 정보를 얻어낼 수는 없기 때문에 세포 하나만 놓고 보면 놓치는 정보가 상당히 많다. 따라서 단일 세포 시퀀싱 분석의 관건은 여러 개의 세포에서 얻어진 정보들을 잘 분류해서 유사한 세포끼리 모아 준 뒤, 비슷한 세포들의 군집을 하나의 단위로 묶어서 분석하는 것이 일반적이다. 이렇게 하면 기존의 bulk RNA 시퀀싱과 다를 것이 없지 않은가 하는 의문이 들 수도 있다. 하지만 중요한 차이점은, bulk RNA 시퀀싱은 시료 내의 모든 세포의 평균값을 분석하는 것이라면, 단일 세포 시퀀싱은 시료 내의 세포들 각각을 개략적으로 들여다보고, 몇 종류의 다른 세포 타입이 존재하는지 파악한 뒤, 각각의 세포 타입에 대한 평균값을 따로 만들어 분석한다는 점이다. 따라서 세포군의 다양성을 파악하면서 동시에 각 세포군에 대해 기존의 RNA 시퀀싱에 버금가는 민감도로 정보를 얻어낼 수 있게 된다.
-단일 세포 시퀀싱 결과의 분석은 구체적으로 어떻게 진행될까? 현재 단일 세포 시퀀싱 분석법은 점차 일반화되고 있는 추세인데, 그 과정은 대체로 (1) pre-processing (2) 차원 축소 (dimensionality reduction) (3) 그래프 형태로 데이터 변환 (4) 그래프 클러스터링 및 연결 구조 분석 (pseudotime) 으로 나눌 수 있다.
+So, how do we analyze the results of single-cell sequencing? Currently, single-cell sequencing methods are becoming more standardized. The process generally includes (1) pre-processing, (2) dimensionality reduction, (3) transforming data into a graph format, and (4) graph clustering and analyzing the connection structure (pseudotime).
 
-## My research
+## My Research
 
-내 연구는 Texas A&M University 의 biology lab 에서 실험한 초파리 뇌의 RNA seq data를 가지고 분석하는 일을 하게 되었다.
+I am analyzing RNA sequencing data from fly brains collected in the biology lab at Texas A&M University. 
 
-단일 세포 데이터를 저장하고 분석하기 위해서는 주로 R의 Seurat이나 Python의 Scanpy가 널리 사용된다. 나의 경우에는 R 의 Seurat패캐지를 사용하였다. 아직 연구가 Publish 되지 않았기 때문에 Seurat 패키지에서 제공되는 함수들을 이용해서 어떤 과정으로 분석하는지 적어보고자 한다. 
-
+To store and analyze single-cell data, the R package Seurat or the Python package Scanpy is commonly used. In my case, I used the Seurat package in R. Since the research has not yet been published, I want to describe the analysis process using functions provided by the Seurat package.
 
 ---
 
@@ -256,17 +253,9 @@ library(UpSetR)
 upset(fromList(significant_genes), nsets = 15, keep.order=TRUE)
 ```
 
-### Conclusion
-
-This project allowed me to effectively analyze scRNA-seq data, filter low-confidence predictions, and identify key markers associated with different cell types. The results provide valuable insights into the cellular composition of the dataset, contributing to our understanding of its biological context.
-
----
-
-Feel free to modify any part to better suit your style or add additional details!
 ## Conclusion
 
 In this project, I successfully performed a comprehensive analysis of scRNA-seq data using various techniques, including normalization, integration, clustering, visualization, and label transfer. The resulting clusters and annotations provide valuable insights into the underlying biology of the dataset, paving the way for further analysis and exploration.
-
 
 
 
