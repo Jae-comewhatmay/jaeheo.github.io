@@ -1,0 +1,274 @@
+---
+layout: post
+title: single cell RNA-Sequencing
+date: 2024-10-17 04:00:00 +0300
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
+img: rna.avif # Add image post (optional)
+tags: [rna, dna, sequencing, clustering] # add tag
+---
+
+## 첫 Bioinformatics 도전
+
+나에게 있어서 Bioinformatics는 큰 도전이었다. 주로 clinical data, economic, spatial, (다른 데이터 너가 생각해봐)만 접하다가 biology, 특히 RNA seqence 데이터는 나에게 매우 새로운 주제였다. 그간 내가 공부하고 single cell RAN-seqencing이란 무엇이며, statisitcsal 하게 어떻게 적용되는지 한번 정리해보려 한다. 
+
+1. 서론
+## What is Single cell RNA-seqeningc Analysis
+
+2000년대 개발된 차세대 RNA 시퀀싱 기술은 수천에서 수만 개의 유전자들을 동시에 측정하게 해 줌으로써 생물학의 시야를 급격히 넓혀주었다. 그 이후로 시퀀싱 기술은 발전에 발전을 거듭하여, 하나의 세포에서 수천 개의 유전자를 동시에 측정할 수 있는 단일 세포 시퀀싱의 시대에 이르렀다. 단일 세포 시퀀싱 기술도 날로 발전하고 있는데, 초기 수 개에서 수십 개의 세포를 다루던 수준에서 이제는 수백만 개의 세포를 동시에 처리하는 단계에 이르렀다. 이는 생명 현상을 관찰하는 우리의 시야를 비약적으로 늘려주었다. 생물학 전 분야에 걸쳐 기존의 연구 모델들을 단일 세포 수준에서 새롭게 접근하는 연구들이 진행되고 있는데, 기존에 알지 못했던 새로운 종류의 세포들이 속속들이 보고되고 있다. 
+
+현재까지 개발된 단일 세포 시퀀싱 기술의 실험 기법과 분석 기법을 대략적으로 정리해보자면
+
+현재 발표된 단일 세포 시퀀싱 기술의 종류는 수십 가지에 이르지만, 그 근본 원리는 기존의 RNA 시퀀싱 기술과 크게 다르지 않다. 대체로 oligo-dT 프라이머를 이용해 poly(A) 꼬리가 달린 mRNA들을 선별적으로 역전사하고, 이 과정에서 달린 adaptor 시퀀스를 이용해 역전사된 DNA를 증폭하여 cDNA library를 만드는 과정을 거치게 된다. 단일 세포 시퀀싱 기술의 관건은 이 과정을 아주 효율적으로 만들어서 하나의 세포에서 나온 RNA를 최대한 증폭하면서, 동시에 세포 별로 각기 다른 바코드 서열을 달아서 각 세포에서 나온 RNA들을 분류할 수 있도록 만드는 것이다. 이를 구현하는 방법에는 Plate based 시퀀싱, Droplet based 시퀀싱, Microwell based 시퀀싱, in situ Combinatorial indexing과 같은 방법들이 있다. 단일 세포 시퀀싱 실험에서 가장 중요한 것은 샘플을 건강한 단일 세포로 분리해 내는 준비 단계가 중요하다고 한다.
+
+
+단일 세포 시퀀싱 분석의 기본 단위는 하나의 세포이지만, 민감도의 한계로 세포의 모든 RNA 분자에 대한 정보를 얻어낼 수는 없기 때문에 세포 하나만 놓고 보면 놓치는 정보가 상당히 많다. 따라서 단일 세포 시퀀싱 분석의 관건은 여러 개의 세포에서 얻어진 정보들을 잘 분류해서 유사한 세포끼리 모아 준 뒤, 비슷한 세포들의 군집을 하나의 단위로 묶어서 분석하는 것이 일반적이다. 이렇게 하면 기존의 bulk RNA 시퀀싱과 다를 것이 없지 않은가 하는 의문이 들 수도 있다. 하지만 중요한 차이점은, bulk RNA 시퀀싱은 시료 내의 모든 세포의 평균값을 분석하는 것이라면, 단일 세포 시퀀싱은 시료 내의 세포들 각각을 개략적으로 들여다보고, 몇 종류의 다른 세포 타입이 존재하는지 파악한 뒤, 각각의 세포 타입에 대한 평균값을 따로 만들어 분석한다는 점이다. 따라서 세포군의 다양성을 파악하면서 동시에 각 세포군에 대해 기존의 RNA 시퀀싱에 버금가는 민감도로 정보를 얻어낼 수 있게 된다.
+단일 세포 시퀀싱 결과의 분석은 구체적으로 어떻게 진행될까? 현재 단일 세포 시퀀싱 분석법은 점차 일반화되고 있는 추세인데, 그 과정은 대체로 (1) pre-processing (2) 차원 축소 (dimensionality reduction) (3) 그래프 형태로 데이터 변환 (4) 그래프 클러스터링 및 연결 구조 분석 (pseudotime) 으로 나눌 수 있다.
+
+## My research
+
+내 연구는 Texas A&M University 의 biology lab 에서 실험한 초파리 뇌의 RNA seq data를 가지고 분석하는 일을 하게 되었다.
+
+단일 세포 데이터를 저장하고 분석하기 위해서는 주로 R의 Seurat이나 Python의 Scanpy가 널리 사용된다. 나의 경우에는 R 의 Seurat패캐지를 사용하였다. 아직 연구가 Publish 되지 않았기 때문에 Seurat 패키지에서 제공되는 함수들을 이용해서 어떤 과정으로 분석하는지 적어보고자 한다. 
+
+
+---
+
+# Drosophila scRNA-seq Analysis Portfolio
+
+## Overview
+In this analysis, I conducted single-cell RNA sequencing (scRNA-seq) of fly data, aiming to integrate multiple datasets, identify clusters, visualize data using UMAP, and transfer cell type labels from a reference dataset. Below, I summarize the key steps taken and the important functions utilized throughout the process.
+
+## Data Normalization and Preprocessing
+
+To begin the analysis, I normalized the scRNA-seq data, identified highly variable features, scaled the data, and performed Principal Component Analysis (PCA). This is a crucial step in ensuring that the data is suitable for downstream analyses.
+
+```r
+fly <- NormalizeData(fly, normalization.method = "LogNormalize", 
+                     scale.factor = 10000)
+fly <- FindVariableFeatures(fly, selection.method = "vst", nfeatures = 2000)
+fly <- ScaleData(fly, features = rownames(fly))
+fly <- RunPCA(fly, features = VariableFeatures(object = fly))
+```
+
+## Integration of Datasets
+
+Next, I integrated multiple layers of data using Canonical Correlation Analysis (CCA), identified neighbors, and clustered the data. I specified a minimum cell count per cluster, ensuring only significant clusters were retained for analysis.
+
+```r
+# Integration Process
+fly <- IntegrateLayers(object = fly, method = CCAIntegration,
+                        orig.reduction = "pca", new.reduction = "integrated.cca", 
+                        verbose = FALSE)
+fly[["RNA"]] <- JoinLayers(fly[["RNA"]])
+fly <- FindNeighbors(fly, reduction = "integrated.cca", dims = 1:10)
+fly <- FindClusters(fly, resolution = 0.4)
+fly <- RunUMAP(fly, dims = 1:10, reduction = "integrated.cca",
+                reduction.name = "umap.integrated")
+
+# Remove clusters with less than 100 cells
+fly = fly[, !fly$seurat_clusters %in% names(which(table(fly$seurat_clusters) < 100))]
+fly$seurat_clusters = droplevels(fly$seurat_clusters)
+```
+
+This resulted in the identification of a total of **12 clusters**, with clusters containing fewer than 100 cells removed.
+
+## UMAP Visualization
+
+For data visualization, I employed UMAP to display the integrated data and identify clusters by condition.
+
+```r
+# Visualization
+DimPlot(fly, reduction = "umap.integrated", label = TRUE, 
+        group.by = c("seurat_clusters","Condition"))
+DimPlot(fly, reduction = "umap.integrated", label = TRUE, split.by = "Condition")
+```
+
+Additionally, I visualized the number of cells per condition in each cluster, providing insight into the distribution of cell types across different conditions.
+
+```r
+cell_data <- data.frame(
+  Cluster = fly@meta.data$seurat_clusters,
+  Condition = fly@meta.data$Condition
+)
+
+cell_counts <- cell_data %>%
+  group_by(Cluster, Condition) %>%
+  summarise(Count = n()) %>%
+  arrange(Cluster, Condition)
+
+ggplot(cell_counts, aes(x = Cluster, y = Count, fill = Condition)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(x = "Cluster", y = "Number of Cells", fill = "Condition") +
+  theme_minimal() +
+  ggtitle("Number of Cells per Condition in Each Cluster (after integration)")
+```
+
+## Reference Data Integration and Label Transfer
+
+I then loaded a reference dataset (the Aging Fly Cell Atlas), cleaned the data to focus on consistent cell type annotations, and created new annotations for specific cell types of interest. 
+
+```r
+library(zellkonverter)
+library(SingleCellExperiment)
+library(glmGamPoi)
+
+sce <- readH5AD("adata_head_S_v1.0.h5ad")
+ref <- CreateSeuratObject(counts = assay(sce, "X"), 
+                          meta.data = as.data.frame(colData(sce)),
+                          project = "Reference")
+
+# Filter to include only relevant datasets and annotations
+ref = ref[, ref$dataset == 'FCA']
+ref = ref[, ref$afca_annotation != 'unannotated']
+ref = ref[, ref$afca_annotation_broad %in% c("CNS neuron", "glial cell")]
+```
+
+Next, I created a new annotation that grouped subtypes of CNS neurons and glial cells into distinct categories.
+
+```r
+# Create new annotations based on existing labels
+ref$new_annotation <- as.character(ref$afca_annotation)
+
+# Example of relabeling specific cell types
+ref$new_annotation[grep("Kenyon cell", ref$afca_annotation)] <- "Kenyon cell"
+# (Add additional relabeling as needed)
+```
+
+## Quality Control and Final Visualization
+
+Quality control was conducted on the reference data to ensure the integrity of the annotations.
+
+```r
+# Quality control on reference data
+VlnPlot(ref, features = c("nFeature_RNA", "nCount_RNA"))
+ref <- subset(ref, subset = nFeature_RNA > 300 & nFeature_RNA < 2000 &
+              nCount_RNA > 500 & nCount_RNA < 3000)
+```
+
+Finally, I performed a transfer of cell type labels from the reference dataset to the fly dataset, using the anchors identified during the integration process.
+
+```r
+# Cell type label transfer
+anchors <- FindTransferAnchors(
+  reference = ref,
+  query = fly,
+  dims = 1:15,
+  reference.reduction = "pca"
+)
+
+fly <- MapQuery(
+  anchorset = anchors,
+  query = fly,
+  reference = ref,
+  refdata = list(afca_annotation_broad = "afca_annotation_broad"),
+  reference.reduction = "pca"
+)
+
+# Visualize transferred labels
+DimPlot(fly, label = TRUE)
+DimPlot(fly, group.by = 'predicted.new_annotation', label = TRUE)
+```
+
+---
+
+
+## Cluster Analysis
+
+In this project, I performed a comprehensive analysis of single-cell RNA sequencing (scRNA-seq) data to identify and annotate different cell types within the dataset. The key steps in my analysis included data filtering, normalization, clustering, and differential expression analysis.
+
+### 1. Data Annotation and Filtering
+
+After transferring predicted labels to the data, I filtered cells based on a maximum prediction score to ensure data quality. A histogram and violin plot illustrated the distribution of these scores:
+
+```r
+# Before filtering 
+hist(fly$predicted.new_annotation.score)
+
+VlnPlot(fly, features = "predicted.new_annotation.score", 
+        group.by = "seurat_clusters", pt.size = 0.1, 
+        fill = "lightgreen") + 
+  labs(title = "Distribution of Max Prediction Score by Cluster", 
+       y = "Max Prediction Score")
+```
+
+Using a threshold of 0.8 (based on a referenced paper), I removed cells that did not meet this criterion, resulting in the exclusion of 7,764 cells from the analysis:
+
+```r
+# Extract the removed cells with 0.8 threshold
+removed_cells <- fly@meta.data[fly$predicted.new_annotation.score < 0.8,]
+# Filter the cells with 0.8 threshold
+fly <- subset(fly, cells = which(fly$predicted.new_annotation.score > 0.8))
+```
+
+### 2. Clustering and Normalization
+
+After data quality checks, I renormalized the data and performed clustering using PCA for dimensionality reduction:
+
+```r
+fly <- NormalizeData(fly, normalization.method = "LogNormalize", scale.factor = 10000)
+fly <- FindVariableFeatures(fly, selection.method = "vst", nfeatures = 2000)
+fly <- ScaleData(fly, features = rownames(fly))
+fly <- RunPCA(fly, features = VariableFeatures(object = fly))
+
+fly <- FindNeighbors(fly, reduction = "integrated.cca", dims = 1:10)
+fly <- FindClusters(fly, resolution = 0.4)
+fly <- RunUMAP(fly, dims = 1:10, reduction = "integrated.cca")
+```
+
+### 3. Visualization of Clusters
+
+To visualize the distribution of cells and their predicted labels, I used UMAP and dot plots:
+
+```r
+Idents(fly) <- "predicted.new_annotation"
+DimPlot(fly, reduction = 'umap.integrated', label = TRUE)
+
+# Dot plot for marker genes
+genes_of_interest <- c("repo", "moody", "nSyb", "elav", ...)
+DotPlot(object = fly, features = genes_of_interest, cols = c("blue", "red"), dot.scale = 8)
+```
+
+### 4. Differential Expression Analysis
+
+Using the `FindMarkers` function, I identified differentially expressed genes across clusters, focusing on significant markers with adjusted p-values < 0.05:
+
+```r
+fly$condition.cluster <- paste(fly$Condition, fly$seurat_clusters, sep = "_")
+Idents(fly) <- "condition.cluster"
+
+significant_genes <- list()
+num_clusters <- 12
+
+for (i in 0:(num_clusters - 1)) {
+  markers_table <- FindMarkers(fly, ident.1 = paste0("WT_", i), ident.2 = paste0("Q5A_", i), verbose = FALSE)
+  markers <- rownames(markers_table[markers_table$p_val_adj <= 0.05, ])
+  significant_genes[[paste0("Cluster_", i)]] <- markers
+}
+```
+
+### 5. Gene Overlap Analysis
+
+To analyze the overlap of significant genes across clusters, I employed an upset plot:
+
+```r
+# UpSet plot for gene overlap
+library(UpSetR)
+upset(fromList(significant_genes), nsets = 15, keep.order=TRUE)
+```
+
+### Conclusion
+
+This project allowed me to effectively analyze scRNA-seq data, filter low-confidence predictions, and identify key markers associated with different cell types. The results provide valuable insights into the cellular composition of the dataset, contributing to our understanding of its biological context.
+
+---
+
+Feel free to modify any part to better suit your style or add additional details!
+## Conclusion
+
+In this project, I successfully performed a comprehensive analysis of scRNA-seq data using various techniques, including normalization, integration, clustering, visualization, and label transfer. The resulting clusters and annotations provide valuable insights into the underlying biology of the dataset, paving the way for further analysis and exploration.
+
+
+
+
+### Reference 
+Jong Eun Park (2018). Trends in Single-cell RNA Sequencing Technology. BRIC View 2018-T28. Available from https://www.ibric.org/bric/trend/bio-report.do?mode=view&articleNo=8692269 (Accessed on Aug 09, 2018).
